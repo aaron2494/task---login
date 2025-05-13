@@ -1,0 +1,17 @@
+<!-- src/app/add-task/add-task.component.html -->
+<div class="mb-4">
+  <div class="input-group">
+    <input 
+      type="text" 
+      class="form-control" 
+      placeholder="Nueva tarea..."
+      [(ngModel)]="newTaskTitle"
+      (keyup.enter)="addTask()">
+    <button 
+      class="btn btn-primary" 
+      type="button"
+      (click)="addTask()">
+      <i class="bi bi-plus"></i> Agregar
+    </button>
+  </div>
+</div>

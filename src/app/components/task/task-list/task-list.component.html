@@ -1,0 +1,70 @@
+<!-- src/app/task-list/task-list.component.html -->
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h1 class="h4 mb-0">Gestor de Tareas</h1>
+        </div>
+        
+        <div class="card-body">
+          <ngb-alert *ngIf="errorMessage" type="danger" (closed)="errorMessage = null">
+            {{ errorMessage }}
+          </ngb-alert>
+
+          <app-add-task (taskAdded)="handleTaskAdded($event)"></app-add-task>
+
+          <div class="mb-3">
+            <div class="btn-group" role="group">
+              <button 
+                type="button" 
+                class="btn" 
+                [class.btn-primary]="filter === 'all'"
+                [class.btn-outline-primary]="filter !== 'all'"
+                (click)="filter = 'all'; onFilterChange()">
+                Todas
+              </button>
+              <button 
+                type="button" 
+                class="btn" 
+                [class.btn-primary]="filter === 'completed'"
+                [class.btn-outline-primary]="filter !== 'completed'"
+                (click)="filter = 'completed'; onFilterChange()">
+                Completadas
+              </button>
+              <button 
+                type="button" 
+                class="btn" 
+                [class.btn-primary]="filter === 'pending'"
+                [class.btn-outline-primary]="filter !== 'pending'"
+                (click)="filter = 'pending'; onFilterChange()">
+                Pendientes
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="isLoading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Cargando...</span>
+            </div>
+          </div>
+
+          <div *ngIf="!isLoading">
+            <div *ngIf="filteredTasks.length === 0" class="alert alert-info">
+              No hay tareas para mostrar
+            </div>
+
+            <div class="list-group">
+              <app-task-item 
+                *ngFor="let task of filteredTasks"
+                [task]="task"
+                (taskDeleted)="handleTaskDeleted($event)"
+                (taskUpdated)="handleTaskUpdated($event)">
+              </app-task-item>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
